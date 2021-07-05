@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alpha video player demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 90%;
+      height: 450px;
+      margin: 50px auto 10px;
+      outline: 1px solid #000;
+      background: #474747;
+    }
+    button {
+      width: 100%;
+      height: 40px;
+      background: #4ecbff;
+      color: #fff;
+      margin: 7px auto;
+    }
+    button:active {
+      background: #000;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+    <button onclick="handlePlayClick()">Play</button>
+    <button onclick="handlePauseClick()">Pause</button>
+    <button onclick="handleSpeedUpClick()">SpeedUp</button>
+    <button onclick="handleSlowDownClick()">SlowDown</button>
+    <button onclick="handleDestroyClick()">destroy</button>
+
+    <script src="../lib/alpha-video-player.umd.js"></script>
+    <script>
+      const alphaVideoPlayer = new AVideoPlayer({
+        container: document.querySelector('.container'),
+        src: './assets/fireworks.mp4',
+        speed: 1,
+        orientation: 'portrait', // video view layout type视频显示类型：竖屏 portrait  横屏 landscape
+        stencilOrder: 'back', // stencil video orider 模板印视频顺序: front 前面  back 后面
+        autoplay: true,
+        loop: true
+      })
+      let videoSpeed = 1
+
+      function handlePlayClick () {
+        alphaVideoPlayer.play()
+      }
+      function handlePauseClick () {
+        alphaVideoPlayer.pause()
+      }
+      function handleSpeedUpClick () {
+        videoSpeed += 0.5
+        alphaVideoPlayer.setSpeed(videoSpeed)
+      }
+      function handleSlowDownClick () {
+        videoSpeed -= 0.5
+        alphaVideoPlayer.setSpeed(videoSpeed)
+      }
+      function handleDestroyClick () {
+        alphaVideoPlayer.destroy()
+      }
+    </script>
+  </body>
+</html>

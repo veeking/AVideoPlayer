@@ -1,0 +1,12 @@
+src
+lib
+docs
+demo
+node_modules
+rollup.config.js
+.vscode
+.editorconfig
+.eslintrc
+.eslintignore
+yarn.lock
+package-lock.json
