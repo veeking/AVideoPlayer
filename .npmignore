@@ -1,5 +1,4 @@
 src
-lib
 docs
 demo
 node_modules
@@ -8,5 +7,6 @@ rollup.config.js
 .editorconfig
 .eslintrc
 .eslintignore
+.babel.config.js
 yarn.lock
 package-lock.json
