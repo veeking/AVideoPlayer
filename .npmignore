@@ -4,9 +4,9 @@ demo
 node_modules
 rollup.config.js
 .vscode
+.eslintrc.js
 .editorconfig
-.eslintrc
 .eslintignore
-.babel.config.js
+babel.config.js
 yarn.lock
 package-lock.json

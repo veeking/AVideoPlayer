@@ -15,8 +15,7 @@
   "scripts": {
     "dev": "NODE_ENV=development rollup -c -w",
     "build": "NODE_ENV=production rollup -c --environment BUILD:production",
-    "deploy": "npm run build && knpm publish",
-    "link": "npm link"
+    "deploy": "npm run build && npm publish --registry http://registry.npmjs.org"
   },
   "repository": {
     "type": "git",
