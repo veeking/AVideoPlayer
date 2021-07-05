@@ -1,17 +1,10 @@
 {
   "name": "alpha-video-player",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A alpha video player base on WebGL render draw. ",
-  "type": "module",
   "main": "lib/alpha-video-player.cjs.js",
   "module": "lib/alpha-video-player.esm.js",
   "browser": "lib/alpha-video-player.umd.js",
-  "exports": {
-    "default": "./src/index.js",
-    "require": "./lib/alpha-video-player.umd.js",
-    "import": "./lib/alpha-video-player.esm.js",
-    "node": "./lib/alpha-video-player.cjs.js"
-  },
   "scripts": {
     "dev": "NODE_ENV=development rollup -c -w",
     "build": "NODE_ENV=production rollup -c --environment BUILD:production",

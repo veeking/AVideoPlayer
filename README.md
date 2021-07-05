@@ -8,6 +8,8 @@ The Gzip file size is only `4KB`
 ## Use
 ```
 npm i -S alpha-video-player
+
+import AVideoPlayer from 'alpha-video-player'
 ```
 And 
 
