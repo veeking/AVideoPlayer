@@ -6,8 +6,8 @@
   "module": "lib/alpha-video-player.esm.js",
   "browser": "lib/alpha-video-player.umd.js",
   "scripts": {
-    "dev": "NODE_ENV=development rollup -c -w",
-    "build": "NODE_ENV=production rollup -c --environment BUILD:production",
+    "dev": "cross-env NODE_ENV=development rollup -c -w",
+    "build": "cross-env NODE_ENV=production rollup -c --environment BUILD:production",
     "deploy": "npm run build && npm publish --registry http://registry.npmjs.org"
   },
   "repository": {

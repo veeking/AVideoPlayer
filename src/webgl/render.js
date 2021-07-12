@@ -34,11 +34,13 @@ class VideoShaderRender {
   }
 
   setRenderViewPort (width, height) {
-    const { container } = this
+    const { container, dpr } = this
     const viewWidth = width || container.offsetWidth
     const viewHeight = height || container.offsetHeight
-    // const dpr = window.devicePixelRatio || 1
-    this.gl.viewport(0, 0, viewWidth, viewHeight)
+    // current width - scale width = diff offset width  and diff offset half
+    const dprX = Math.floor((viewWidth - (viewWidth * dpr)) / 2)
+    const dprY = Math.floor((viewHeight - (viewHeight * dpr)) / 2)
+    this.gl.viewport(dprX, dprY, viewWidth * dpr, viewHeight * dpr)
   }
 
   initRenderShader () {
@@ -74,11 +76,15 @@ class VideoShaderRender {
     const aVertexPositionLocation = this.getAttribLocation('aVertexPosition')
     const aTextureCoordLocation = this.getAttribLocation('aTextureCoord')
     const vTextureOffsetVectorLocation = this.getUniformLocation('vTextureOffsetVector')
+    const uScaleVectorLocation = this.getUniformLocation('uScale')
     const [stencilOffsetX, stencilOffsetY] = this.offsetVertices
 
     WebGLUtils.setShaderBuffer(this.gl, aVertexPositionLocation, this.positionVertices)
     WebGLUtils.setShaderBuffer(this.gl, aTextureCoordLocation, this.textureVertices)
     this.gl.uniform2f(vTextureOffsetVectorLocation, stencilOffsetX, stencilOffsetY)
+    // set scale vector to adapt dpr viewport
+    // 1/dpr === viewPort.width / viewPort.width * dpr
+    this.gl.uniform4fv(uScaleVectorLocation, [1/this.dpr, 1/this.dpr, 0.0, 1.0])
   }
 
   initTextureBuffer () {
