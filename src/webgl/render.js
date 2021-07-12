@@ -24,6 +24,7 @@ class VideoShaderRender {
   init () {
     this.canvas = this.createCanvas()
     this.gl = this.createGl(this.canvas)
+    this.dpr = window.devicePixelRatio || 1
     this.shaderProgram = this.createProgram()
 
     this.setRenderViewPort()
@@ -36,8 +37,8 @@ class VideoShaderRender {
     const { container } = this
     const viewWidth = width || container.offsetWidth
     const viewHeight = height || container.offsetHeight
-    const dpr = window.devicePixelRatio || 1
-    this.gl.viewport(0, 0, viewWidth * dpr, viewHeight * dpr)
+    // const dpr = window.devicePixelRatio || 1
+    this.gl.viewport(0, 0, viewWidth, viewHeight)
   }
 
   initRenderShader () {
@@ -144,6 +145,9 @@ class VideoShaderRender {
   }
 
   resizeRender (width, height) {
+    // const { container } = this
+    // const viewWidth = container.offsetWidth
+    // console.log(viewWidth / width)
     this.canvas.width = width
     this.canvas.height = height
     this.setRenderViewPort(width, height)
