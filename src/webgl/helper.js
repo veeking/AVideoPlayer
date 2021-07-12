@@ -13,8 +13,8 @@ const WebGLUtils = {
     const canvas = document.createElement('canvas')
     const dpr = window.devicePixelRatio || 1
     if (!isNaN(width) && !isNaN(height)) {
-      canvas.style.width = `${width}px`
-      canvas.style.height = `${height}px`
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
       canvas.width = width * dpr
       canvas.height = height * dpr
     }

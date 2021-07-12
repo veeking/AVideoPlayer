@@ -2,7 +2,7 @@ import vertexFrag from './shaders/vertex_frag.glsl'
 import textureFrag from './shaders/texture_frag.glsl'
 import { texturePortraitVertices, textureLandscapeVertices, stencilOffsetPortraitVertices, stencilOffsetLandscapeVertices } from './vertics'
 import { requestAnimFrame, cancelAnimFrame } from '../utils/tick'
-import { WebGLUtils } from './create'
+import { WebGLUtils } from './helper'
 
 /**
  * VideoShaderRender
@@ -22,7 +22,8 @@ class VideoShaderRender {
   }
 
   init () {
-    this.gl = this.createGl()
+    this.canvas = this.createCanvas()
+    this.gl = this.createGl(this.canvas)
     this.shaderProgram = this.createProgram()
 
     this.setRenderViewPort()
@@ -31,10 +32,10 @@ class VideoShaderRender {
     this.initTextureBuffer()
   }
 
-  setRenderViewPort () {
+  setRenderViewPort (width, height) {
     const { container } = this
-    const viewWidth = container.offsetWidth
-    const viewHeight = container.offsetHeight
+    const viewWidth = width || container.offsetWidth
+    const viewHeight = height || container.offsetHeight
     const dpr = window.devicePixelRatio || 1
     this.gl.viewport(0, 0, viewWidth * dpr, viewHeight * dpr)
   }
@@ -114,11 +115,15 @@ class VideoShaderRender {
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
   }
 
-  createGl () {
+  createCanvas () {
     const { container } = this
     const canvasEl = WebGLUtils.createCanvas(container.offsetWidth, container.offsetHeight)
-    const gl = WebGLUtils.getContextWebGL(canvasEl)
     container.appendChild(canvasEl)
+    return canvasEl
+  }
+
+  createGl (canvas) {
+    const gl = WebGLUtils.getContextWebGL(canvas)
     return gl
   }
 
@@ -133,6 +138,12 @@ class VideoShaderRender {
 
   getUniformLocation (name) {
     return this.gl.getUniformLocation(this.shaderProgram, name)
+  }
+
+  resizeRender (width, height) {
+    this.canvas.width = width
+    this.canvas.height = height
+    this.setRenderViewPort(width, height)
   }
 
   destroy () {

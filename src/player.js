@@ -12,7 +12,7 @@
  */
 import WebVideo from './video'
 import VideoShaderRender from './webgl/render'
-import { WebGLUtils } from './webgl/create'
+import { WebGLUtils } from './webgl/helper'
 
 const PLAY_STATE = {
   NONE: 0,
@@ -110,6 +110,10 @@ class AVideoPlayer {
     if (this.playState === PLAY_STATE.PLAY) {
       this.webglRenderer.stopTick()
     }
+    if (!this.videoWidth || !this.videoHeight) {
+      this.resize()
+    }
+
     this.webglRenderer.startTick()
     this.playState = PLAY_STATE.PLAY
   }
@@ -129,6 +133,19 @@ class AVideoPlayer {
     this.playState = PLAY_STATE.ERROR
     this.webglRenderer.stopTick()
     this.onError()
+  }
+
+  resize () {
+    const { orientation } = this
+    const { width: videoWidth = 0, height: videoHeight = 0 } = this.videoPlayer.getVideoRect()
+    this.videoWidth = videoWidth
+    this.videoHeight = videoHeight
+    // Set the render canvas width and height to the actual video width and height to prevent resize distortion
+    if (orientation === 'portrait') {
+      this.webglRenderer.resizeRender(this.videoWidth, this.videoHeight / 2)
+    } else {
+      this.webglRenderer.resizeRender(this.videoWidth / 2, this.videoHeight)
+    }
   }
 
   destroy () {
