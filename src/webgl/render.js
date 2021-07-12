@@ -87,13 +87,17 @@ class VideoShaderRender {
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1)
   }
 
-  runRenderFrameTick = () => {
+  step = () => {
+    this.ticker = requestAnimFrame(this.step)
+    this.tick()
+  }
+
+  tick () {
     this.draw()
-    this.ticker = requestAnimFrame(this.runRenderFrameTick)
   }
 
   startTick = () => {
-    this.runRenderFrameTick()
+    this.ticker = requestAnimFrame(this.step)
   }
 
   stopTick = () => {
@@ -102,7 +106,6 @@ class VideoShaderRender {
 
   draw () {
     const { gl, pixels } = this
-
     gl.texImage2D(
       gl.TEXTURE_2D,
       0,

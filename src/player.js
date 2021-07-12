@@ -12,7 +12,7 @@
  */
 import WebVideo from './video'
 import VideoShaderRender from './webgl/render'
-import { WebGLUtils } from './webgl/helper'
+import { WebGLUtils, isDocumentHidden } from './webgl/helper'
 
 const PLAY_STATE = {
   NONE: 0,
@@ -88,6 +88,8 @@ class AVideoPlayer {
       stencilOrder,
       pixels: videoPlayer.videoEl
     })
+    // fix: RequestAnimationFrame will stop When document page hidden
+    document.addEventListener('visibilitychange', this.onVisibilityChange)
   }
 
   play () {
@@ -113,7 +115,6 @@ class AVideoPlayer {
     if (!this.videoWidth || !this.videoHeight) {
       this.resize()
     }
-
     this.webglRenderer.startTick()
     this.playState = PLAY_STATE.PLAY
   }
@@ -135,6 +136,15 @@ class AVideoPlayer {
     this.onError()
   }
 
+  onVisibilityChange = () => {
+    // if page hidden, suspend requestAnimationFrame
+    if (isDocumentHidden()) {
+      this.webglRenderer.stopTick()
+    } else {
+      this.webglRenderer.startTick()
+    }
+  }
+
   resize () {
     const { orientation } = this
     const { width: videoWidth = 0, height: videoHeight = 0 } = this.videoPlayer.getVideoRect()
@@ -151,6 +161,7 @@ class AVideoPlayer {
   destroy () {
     this.videoPlayer.close()
     this.webglRenderer.destroy()
+    document.removeEventListener('visibilitychange', this.onVisibilityChange)
   }
 }
 export default AVideoPlayer

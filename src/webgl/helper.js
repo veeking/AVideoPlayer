@@ -81,6 +81,12 @@ const WebGLUtils = {
   }
 }
 
+/* check document page whether show and hide */
+function isDocumentHidden () {
+  return !!document && document.hidden
+}
+
 export {
-  WebGLUtils
+  WebGLUtils,
+  isDocumentHidden
 }
