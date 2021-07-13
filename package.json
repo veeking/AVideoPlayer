@@ -1,6 +1,6 @@
 {
   "name": "alpha-video-player",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A alpha video player base on WebGL render draw. ",
   "main": "lib/alpha-video-player.cjs.js",
   "module": "lib/alpha-video-player.esm.js",
