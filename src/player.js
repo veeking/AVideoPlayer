@@ -138,10 +138,17 @@ class AVideoPlayer {
 
   onVisibilityChange = () => {
     // if page hidden, suspend requestAnimationFrame
+    // TODO: solve to video and requestAnimationFrame will intercept problem when document page hidden
     if (isDocumentHidden()) {
-      this.webglRenderer.stopTick()
+      this.pause()
     } else {
-      this.webglRenderer.startTick()
+      this.pause()
+      if (this.replayTimer) {
+        clearTimeout(this.replayTimer)
+      }
+      this.replayTimer = setTimeout(() => {
+        this.play()
+      }, 1500)
     }
   }
 
@@ -159,6 +166,9 @@ class AVideoPlayer {
   }
 
   destroy () {
+    if (this.replayTimer) {
+      clearTimeout(this.replayTimer)
+    }
     this.videoPlayer.close()
     this.webglRenderer.destroy()
     document.removeEventListener('visibilitychange', this.onVisibilityChange)
