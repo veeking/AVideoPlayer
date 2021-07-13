@@ -84,7 +84,7 @@ class VideoShaderRender {
     this.gl.uniform2f(vTextureOffsetVectorLocation, stencilOffsetX, stencilOffsetY)
     // set scale vector to adapt dpr viewport
     // 1/dpr === viewPort.width / viewPort.width * dpr
-    this.gl.uniform4fv(uScaleVectorLocation, [1/this.dpr, 1/this.dpr, 0.0, 1.0])
+    this.gl.uniform4fv(uScaleVectorLocation, [1 / this.dpr, 1 / this.dpr, 0.0, 1.0])
   }
 
   initTextureBuffer () {
